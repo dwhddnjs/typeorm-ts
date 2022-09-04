@@ -1,5 +1,6 @@
-import { AppDataSource } from "./data-source"
 import { User } from "./entity/User"
+import {createUser} from './createUser';
+import { AppDataSource } from "./data-source"
 
 AppDataSource.initialize().then(async () => {
 
@@ -15,6 +16,8 @@ AppDataSource.initialize().then(async () => {
     const users = await AppDataSource.manager.find(User)
     console.log("Loaded users: ", users)
 
+
     console.log("Here you can setup and run express / fastify / any other framework.")
+    // await createUser().catch((error) => console.log(error))
 
 }).catch(error => console.log(error))
