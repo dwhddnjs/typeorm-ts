@@ -1,8 +1,13 @@
 import { User } from "./entity/User";
 import { AppDataSource } from "./data-source";
 import * as express from "express";
+import * as cors from "cors";
 
 const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 
 AppDataSource.initialize()
   .then(async () => {
