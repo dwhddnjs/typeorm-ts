@@ -14,6 +14,16 @@ app.get("/users", async (req: Request, res: Response) => {
   const users = await AppDataSource.getRepository(User).find();
   res.json(users);
 });
+
+app.post("/signup", async (req: Request, res: Response) => {
+  const user = new User();
+  const { email, password } = req.body;
+  user.email = email;
+  user.password = password;
+
+  const users = await AppDataSource.getRepository(User).save(user);
+});
+
 app.post("/signin", async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const user = await AppDataSource.getRepository(User).findOneBy({
