@@ -21,7 +21,7 @@ app.post("/signup", async (req: Request, res: Response) => {
   user.email = email;
   user.password = password;
 
-  const users = await AppDataSource.getRepository(User).save(user);
+  return await AppDataSource.getRepository(User).save(user);
 });
 
 app.post("/signin", async (req: Request, res: Response) => {
