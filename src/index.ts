@@ -20,7 +20,6 @@ app.post("/signup", async (req: Request, res: Response) => {
   const { email, password } = req.body;
   user.email = email;
   user.password = password;
-
   return await AppDataSource.getRepository(User).save(user);
 });
 
@@ -31,7 +30,7 @@ app.post("/signin", async (req: Request, res: Response) => {
     password: password,
   });
   if (user) {
-    return res.send("유저가 존재합니다");
+    return res.json(user);
   } else {
     return res.send("아디 비번이 틀립니다");
   }
