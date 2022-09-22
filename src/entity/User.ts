@@ -2,12 +2,15 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("uuid")
   id: number;
 
-  @Column()
+  @Column("varchar", { length: 255, nullable: true })
+  name: string;
+
+  @Column("varchar", { length: 255, nullable: true })
   email: string;
 
-  @Column()
+  @Column({ length: 255, nullable: true })
   password: string;
 }

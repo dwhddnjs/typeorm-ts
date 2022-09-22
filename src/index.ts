@@ -1,47 +1,27 @@
-import { User } from "./entity/User";
 import { AppDataSource } from "./data-source";
+import { User } from "./entity/User";
 import { Response, Request } from "express";
-import express = require("express");
-import * as cors from "cors";
+import express from "express";
+import cors from "cors";
+import authRoute from "./routes/auth";
 
 const app = express();
+const PORT = 4000;
 
+// 미들웨어
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
+app.use("/api/user", authRoute);
 
-app.get("/users", async (req: Request, res: Response) => {
-  const users = await AppDataSource.getRepository(User).find();
-  res.json(users);
-});
-
-app.post("/signup", async (req: Request, res: Response) => {
-  const user = new User();
-  const { email, password } = req.body;
-  user.email = email;
-  user.password = password;
-  return await AppDataSource.getRepository(User).save(user);
-});
-
-app.post("/signin", async (req: Request, res: Response) => {
-  const { email, password } = req.body;
-  const user = await AppDataSource.getRepository(User).findOneBy({
-    email: email,
-    password: password,
-  });
-  if (user) {
-    return res.json(user);
-  } else {
-    return res.send("아디 비번이 틀립니다");
-  }
-});
-
+// MYSQL 연결
 AppDataSource.initialize()
   .then(() => {
     console.log("DB연결 완료");
   })
   .catch((error) => console.log(error));
 
-app.listen(4000, () => {
-  console.log("서버 실행중입니다");
+// 4000포트 서버 실행
+app.listen(PORT, () => {
+  console.log(`${PORT}로 서버 실행중입니다`);
 });
