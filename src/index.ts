@@ -4,6 +4,7 @@ import { Response, Request } from "express";
 import express from "express";
 import cors from "cors";
 import authRoute from "./routes/auth";
+import postRoute from "./routes/post";
 
 const app = express();
 const PORT = 4000;
@@ -12,7 +13,9 @@ const PORT = 4000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
+
 app.use("/api/user", authRoute);
+app.use("/api/post", postRoute);
 
 // MYSQL 연결
 AppDataSource.initialize()
