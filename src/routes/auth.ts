@@ -51,9 +51,7 @@ router.post("/login", async (req, res) => {
 
   //jwt 토큰만들기
   const token = jwt.sign({ _id: user.id }, "asdzxcasdzxcasdzxc");
-  res.header("auth-token", token).send(token);
-
-  res.status(200).send("로그인 되었습니다");
+  res.header("auth-token", token).status(200).send(token);
 });
 
 export default router;
